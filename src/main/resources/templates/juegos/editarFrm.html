@@ -24,7 +24,13 @@
                     </div>
                     <div class="form-group">
                         <label for="genero.idgenero">Género</label>
-                        <!-- ....... -->
+                        <select class="form-control custom-select"  th:field="*{genero.idgenero}" >
+                            <option value="-1">- Seleccione -</option>
+                            <option th:each="genero : ${listaGeneros}"
+                                    th:value="${genero.idgenero}"
+                                    th:text="${genero.nombre}"
+                                    th:selected="(${genero.idgenero} == *{genero.idgenero})"></option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="plataforma.idplataforma">Plataforma</label>
@@ -39,7 +45,13 @@
                     </div>
                     <div class="form-group">
                         <label for="distribuidora.iddistribuidora">Dsitribuidora</label>
-                        <!-- ....... -->
+                        <select class="form-control custom-select"  th:field="*{distribuidora.iddistribuidora}" >
+                            <option value="-1">- Seleccione -</option>
+                            <option th:each="distribuidora : ${listaDistribuidoras}"
+                                    th:value="${distribuidora.iddistribuidora}"
+                                    th:text="${distribuidora.nombre}"
+                                    th:selected="(${distribuidora.iddistribuidora} == *{distribuidora.iddistribuidora})" ></option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Imagen URL</label>
@@ -66,7 +78,7 @@
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Colocar # Grupo - PUCP @ 2021</div>
+                    <div class="text-muted">Grupo 1 - PUCP @ 2021</div>
                 </div>
             </div>
         </footer>

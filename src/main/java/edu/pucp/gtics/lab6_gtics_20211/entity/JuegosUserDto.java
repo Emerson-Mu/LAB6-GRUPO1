@@ -4,8 +4,7 @@ public interface JuegosUserDto {
 
     String getImageURL();
     String getNombre();
-    /* ...... */
+    String getGenero();
     String getDescripcion();
-
 
 }

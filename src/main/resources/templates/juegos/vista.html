@@ -8,26 +8,20 @@
         <main>
             <!-- Contenido -->
             <div class="container-fluid">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 card-app">
+                    <div class="col mb-4" th:each="juego : ${listajuegos}">
+                        <div class="card" >
+                            <img class="card-img-top" th:src="${juego.getImageURL()}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${juego.getNombre()}">The Legend of Zelda Breath of the Wild</h5>
+                                <span th:text="${juego.getGenero()}"></span>
+                                <p class="card-text" th:text="${juego.getDescripcion()}">Es un videojuego de acción-aventura de 2017 de la serie The Legend of Zelda. El jugador controla a Link, que despierta en un mundo postapocalíptico después de estar cien años durmiendo para derrotar a Ganon y salvar al reino de Hyrule. </p>
 
-                <div class="page-header text-center">
-                    <h1>Lista de Juegos</h1>
-                </div>
-                <div class="container-fluid">
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 card-app">
-                        <div class="col mb-4" th:each="juego, info : ${listajuegos}">
-                            <div class="card" >
-                                <img class="card-img-top" th:src="${juego.image}" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title" >
-                                        <span th:text="${juego.nombre}"></span>
-                                        <!-- ....... -->
-                                    </h5>
-                                    <p class="card-text" th:text="${juego.descripcion}"></p>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
             </div>
             <!-- /Contenido -->

@@ -5,40 +5,44 @@
 </head>
 <body>
 <div th:fragment="header(option)">
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #eaedfc;">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
         <a class="navbar-brand" th:href="@{/}">
             <img th:src="@{/img/icon.png}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
-            GameShop3 [Lab 6]
+            GameShop3 [Lab 5]
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-app" aria-controls="navbar-app" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-star" id="navbar-app">
-            <ul sec:authorize="isAuthenticated()" class="navbar-nav">
-                <li class="nav-item" th:classappend="${option == 'Juegos'}?'active' :''">
-                    <a class="nav-link" th:href="@{/juegos/lista}">Juegos</a>
+            <ul class="navbar-nav">
+                <li  class="nav-item active">
+                    <a class="nav-link" th:classappend="${option == 'Juegos'?'active':''}"
+                       th:href="@{/juegos}">Juegos</a>
                 </li>
-                <li class="nav-item" th:classappend="${option == 'Plataformas'}?'active' :''" sec:authorize="hasAnyAuthority('ADMIN')">
-                    <a class="nav-link" th:href="@{/plataformas/lista}">Plataformas</a>
+                <li sec:authorize="hasAnyAuthority('admin')" class="nav-item">
+                    <a class="nav-link" th:classappend="${option == 'Plataformas'?'active':''}"
+                       th:href="@{/plataformas}">Plataformas</a>
                 </li>
-                <!-- ....... -->
             </ul>
         </div>
-        <div class="collapse navbar-collapse justify-content-end" id="navbar-app">
+        <div class="collapse navbar-collapse justify-content-end" id="navbar-app2">
+            <div sec:authorize="isAnonymous()" class="form-inline my-2 my-lg-0 d-flex">
+                <a class="nav-link" th:href="@{/loginForm}">Iniciar Sesión</a>
+            </div>
             <ul sec:authorize="isAnonymous()" class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/user/signIn}">Ingresar</a>
                 </li>
             </ul>
-            <ul sec:authorize="isAuthenticated()" class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-user"></i><span th:text="| (${session.user.nombres} ${session.user.apellidos})|"></span>
+            <ul  class="navbar-nav">
+                <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                    <a  class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user"></i><span th:text="|(${session.usuario.nombres} ${session.usuario.apellidos})|"> (Enrique Larios)</span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">
-                            <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
+                            <form class="form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">
                                 <button type="submit" class="btn btn-link btn-sm nav-link" style="color: #c82333; border-left-width: 0px; padding-left: 0px;">Cerrar Sesión</button>
                             </form>
                         </a>
