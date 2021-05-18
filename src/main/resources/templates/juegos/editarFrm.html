@@ -1,0 +1,78 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base.html :: head(title='Gameshop3 - Bienvenido')"></head>
+<body>
+<div class='container container-app'>
+    <div th:replace="fragments/header.html :: header(option='Juegos')"></div>
+
+    <div id="content">
+        <main>
+            <!-- Contenido -->
+        <div class="page-header text-center">
+            <h2 th:text="${juego.idjuego == 0? 'Nuevo Juego' : 'Editar Juego'}"></h2>
+        </div>
+        <div class="container-fluid">
+                <form method="POST"  th:object="${juego}"  th:action="@{/juegos/guardar}">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control"  th:field="*{nombre}" >
+                        <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea class="form-control" id="descripcion" name="descripcion" th:field="*{descripcion}"></textarea>
+                        <div class="text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}">Error</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="genero.idgenero">Género</label>
+                        <!-- ....... -->
+                    </div>
+                    <div class="form-group">
+                        <label for="plataforma.idplataforma">Plataforma</label>
+                        <select class="form-control custom-select"  th:field="*{plataforma.idplataforma}" >
+                          <option value="-1">- Seleccione -</option>
+                          <option th:each="plataforma : ${listaPlataformas}"
+                              th:value="${plataforma.idplataforma}"
+                              th:text="${plataforma.nombre}"
+                              th:selected="(${plataforma.idplataforma} == *{plataforma.idplataforma})" ></option>
+                        </select>
+                        <div class="text-danger" th:if="${#fields.hasErrors('plataforma.idplataforma')}" th:errors="*{plataforma.idplataforma}">Error</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="distribuidora.iddistribuidora">Dsitribuidora</label>
+                        <!-- ....... -->
+                    </div>
+                    <div class="form-group">
+                        <label>Imagen URL</label>
+                        <input type="text" class="form-control"  th:field="*{image}" >
+                    </div>
+                    <div class="form-group">
+                        <label>Precio</label>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">S/</div>
+                            </div>
+                            <input type="text" class="form-control"  th:field="*{precio}" >
+                        </div>
+                        <div class="text-danger" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}">Error</div>
+                    </div>
+                    <input type="hidden" th:field="*{idjuego}" />
+                    <a th:href="@{/juegos/lista}" class="btn btn-danger">Cancelar</a>
+                    <button type="submit" class="btn btn-primary" th:text="${juego.idjuego == 0? 'Registrar' : 'Actualizar'}">Reg/act</button>
+                </form>
+        </div>
+        </main>
+    </div>
+            <!-- /Contenido -->
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Colocar # Grupo - PUCP @ 2021</div>
+                </div>
+            </div>
+        </footer>
+</div>
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>
