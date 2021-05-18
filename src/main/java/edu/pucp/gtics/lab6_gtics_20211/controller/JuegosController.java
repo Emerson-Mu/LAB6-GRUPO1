@@ -2,6 +2,7 @@ package edu.pucp.gtics.lab6_gtics_20211.controller;
 
 import edu.pucp.gtics.lab6_gtics_20211.entity.*;
 import edu.pucp.gtics.lab6_gtics_20211.repository.*;
+//import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
@@ -73,6 +74,8 @@ public class JuegosController {
         model.addAttribute("listaPlataformas", listaPlataformas);
         model.addAttribute("listaDistribuidoras", listaDistribuidoras);
         model.addAttribute("listaGeneros", listaGeneros);
+        //linea que agrego EM
+        //model.addAttribute("juego", new Juegos());
         return "juegos/editarFrm";
     }
 
@@ -96,7 +99,25 @@ public class JuegosController {
 
     @PostMapping("/juegos/guardar")
     public String guardarJuegos(Model model, RedirectAttributes attr, @ModelAttribute("juego") @Valid Juegos juego, BindingResult bindingResult ){
+
+        /*Optional<Distribuidoras>  opt1 = distribuidorasRepository.findById(juego.getDistribuidora().getIddistribuidora());
+        Optional<Plataformas> opt2 = plataformasRepository.findById(juego.getPlataforma().getIdplataforma());
+        Optional<Generos> opt3 = generosRepository.findById(juego.getGenero().getIdgenero());
+        if(opt1.isPresent() && opt2.isPresent() && opt3.isPresent()){
+            juego.setDistribuidora(opt1.get());
+            juego.setPlataforma(opt2.get());
+            juego.setGenero(opt3.get());
+        }*/
+        System.out.println(juego.getIdjuego());
+        System.out.println(juego.getDistribuidora().getFundacion() +" "+ juego.getDistribuidora().getNombre());
+        System.out.println(juego.getPlataforma().getNombre() +" "+ juego.getPlataforma().getDescripcion());
+
         if(bindingResult.hasErrors()){
+            System.out.println(bindingResult.getAllErrors());
+            System.out.println(juego.getIdjuego());
+            System.out.println(juego.getDistribuidora().getFundacion() +" "+ juego.getDistribuidora().getNombre());
+            System.out.println(juego.getPlataforma().getNombre() +" "+ juego.getPlataforma().getDescripcion());
+
             List<Plataformas> listaPlataformas = plataformasRepository.findAll();
             List<Distribuidoras> listaDistribuidoras = distribuidorasRepository.findAll();
             List<Generos> listaGeneros = generosRepository.findAll();
@@ -108,6 +129,8 @@ public class JuegosController {
         } else {
             if (juego.getIdjuego() == 0) {
                 attr.addFlashAttribute("msg", "Juego creado exitosamente");
+                System.out.println("Se llego aqui");
+                System.out.println("El id del juego es: "+juego.getIdjuego());
             } else {
                 attr.addFlashAttribute("msg", "Juego actualizado exitosamente");
             }
