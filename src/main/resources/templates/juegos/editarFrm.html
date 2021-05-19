@@ -25,24 +25,40 @@
                     </div>
 
                     <div class="form-group">
+
                         <label for="genero">Género</label>
                         <select class="form-control custom-select" id="genero" name="genero">
                             <option value="-1">- Seleccione -</option>
-                            <option th:each="genero : ${listaGeneros}"
-                                    th:value="${genero.idgenero}"
-                                    th:text="|${genero.nombre}|">
-                            <!--th:selected="(${genero.idgenero == juego.genero.idgenero})"--></option>
+                                    <div th:if="${ juego.genero != null }">
+                                        <option th:each="generos : ${listaGeneros}"
+                                                th:value="${generos.idgenero}"
+                                                th:text="|${generos.nombre}|"
+                                                th:selected="${generos.idgenero == juego.genero.idgenero}"></option>
+                                    </div>
+                                    <div th:unless="${ juego.genero != null }">
+                                        <option th:each="generos : ${listaGeneros}"
+                                                th:value="${generos.idgenero}"
+                                                th:text="|${generos.nombre}|"></option>
+                                    </div>
                         </select>
                         <div class="text-danger" th:if="${#fields.hasErrors('genero')}" th:errors="*{genero}">Error</div>
                     </div>
+
                     <div class="form-group">
                         <label for="plataforma">Plataforma</label>
                         <select class="form-control custom-select" id="plataforma" name="plataforma" >
                           <option value="-1">- Seleccione -</option>
-                          <option th:each="plataforma : ${listaPlataformas}"
-                              th:value="${plataforma.idplataforma}"
-                              th:text="|${plataforma.nombre}|">
-                              <!--th:selected="(${plataforma.idplataforma == juego.plataforma.idplataforma})"--></option>
+                            <div th:if="${ juego.plataforma != null }">
+                              <option th:each="plataformas : ${listaPlataformas}"
+                                      th:value="${plataformas.idplataforma}"
+                                      th:text="|${plataformas.nombre}|"
+                                      th:selected="${plataformas.idplataforma == juego.plataforma.idplataforma}"></option>
+                            </div>
+                            <div th:unless="${ juego.plataforma != null }">
+                                <option th:each="plataformas : ${listaPlataformas}"
+                                        th:value="${plataformas.idplataforma}"
+                                        th:text="|${plataformas.nombre}|"></option>
+                            </div>
                       </select>
                       <div class="text-danger" th:if="${#fields.hasErrors('plataforma')}" th:errors="*{plataforma}">Error</div>
                   </div>
@@ -51,28 +67,35 @@
                       <label for="distribuidora">Distribuidora</label>
                       <select class="form-control custom-select"  id="distribuidora" name="distribuidora" >
                           <option value="-1">- Seleccione -</option>
-                          <option th:each="distribuidora : ${listaDistribuidoras}"
-                                  th:value="${distribuidora.iddistribuidora}"
-                                  th:text="|${distribuidora.nombre}|">
-                          <!--th:selected="(${distribuidora.iddistribuidora == juego.distribuidora.iddistribuidora})"--></option>
-               </select>
-               <div class="text-danger" th:if="${#fields.hasErrors('distribuidora')}" th:errors="*{distribuidora}">Error</div>
-
-           </div>
-           <div class="form-group">
-               <label>Imagen URL</label>
-               <input type="text" class="form-control"  th:field="*{image}" >
-           </div>
-           <div class="form-group">
-               <label>Precio</label>
-               <div class="input-group mb-2">
-                   <div class="input-group-prepend">
-                       <div class="input-group-text">S/</div>
-                   </div>
-                   <input type="text" class="form-control"  th:field="*{precio}" >
+                          <div th:if="${ juego.distribuidora != null }">
+                              <option th:each="distribuidoras : ${listaDistribuidoras}"
+                                      th:value="${distribuidoras.iddistribuidora}"
+                                      th:text="|${distribuidoras.nombre}|"
+                                      th:selected="${distribuidoras.iddistribuidora == juego.distribuidora.iddistribuidora}"></option>
+                          </div>
+                          <div th:unless="${ juego.distribuidora != null }">
+                              <option th:each="distribuidoras : ${listaDistribuidoras}"
+                                      th:value="${distribuidoras.iddistribuidora}"
+                                      th:text="|${distribuidoras.nombre}|"></option>
+                          </div>
+                      </select>
+                    <div class="text-danger" th:if="${#fields.hasErrors('distribuidora')}" th:errors="*{distribuidora}">Error</div>
                </div>
-               <div class="text-danger" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}">Error</div>
-           </div>
+
+               <div class="form-group">
+                   <label>Imagen URL</label>
+                   <input type="text" class="form-control"  th:field="*{image}" >
+               </div>
+               <div class="form-group">
+                   <label>Precio</label>
+                   <div class="input-group mb-2">
+                       <div class="input-group-prepend">
+                           <div class="input-group-text">S/</div>
+                       </div>
+                       <input type="text" class="form-control"  th:field="*{precio}" >
+                   </div>
+                   <div class="text-danger" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}">Error</div>
+               </div>
 
            <a th:href="@{/juegos/lista}" class="btn btn-danger">Cancelar</a>
            <button type="submit" class="btn btn-primary" th:text="${juego.idjuego == 0? 'Registrar' : 'Actualizar'}">Reg/act</button>
