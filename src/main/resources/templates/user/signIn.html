@@ -27,6 +27,26 @@
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
                     </form>
+                    <div>
+                        <a th:href="@{/oauth2/authorization/google}">Google</a>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="g-signin2" data-width="190" data-height="55" data-onsuccess="onSignIn"></div>
+                        <script>
+                            function onSignIn(googleUser) {
+                                var profile = googleUser.getBasicProfile();
+                                var id_token = googleUser.getAuthResponse().id_token;
+                                console.log("ID Token: " + id_token);
+                                var xhr = new XMLHttpRequest();
+                                xhr.open('POST', 'https://localhost:8080/tokensignin');
+                                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                xhr.onload = function() {
+                                    console.log('Signed in as: ' + xhr.responseText);
+                                };
+                                xhr.send('idtoken=' + id_token);
+                            }
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>

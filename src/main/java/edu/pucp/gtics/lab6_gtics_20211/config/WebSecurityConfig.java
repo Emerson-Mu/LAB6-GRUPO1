@@ -2,11 +2,15 @@ package edu.pucp.gtics.lab6_gtics_20211.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 import javax.sql.DataSource;
 
@@ -27,12 +31,37 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true);
-
+/*
         http.authorizeRequests()
                 .antMatchers("/plataformas/editarFrm", "/plataformas/lista").hasAuthority("ADMIN")
                 .antMatchers("/distribuidoras/editarFrm", "/distribuidoras/lista").hasAuthority("ADMIN")
                 .antMatchers("/juegos/editarFrm", "/juegos/lista").hasAnyAuthority("ADMIN","USER")
-                .anyRequest().permitAll();
+                .anyRequest().permitAll()
+                .and()
+                .oauth2Login()
+                .and()
+                .logout()
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutSuccessUrl("/");;
+
+ */
+
+        http.csrf().disable().authorizeRequests(a->a
+                .antMatchers("/plataformas/editarFrm", "/plataformas/lista").hasAuthority("ADMIN")
+                .antMatchers("/distribuidoras/editarFrm", "/distribuidoras/lista").hasAuthority("ADMIN")
+                .antMatchers("/juegos/editarFrm", "/juegos/lista").hasAnyAuthority("ADMIN","USER")
+                .anyRequest().permitAll())
+                .exceptionHandling(e->e
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+            .oauth2Login().permitAll()
+                .defaultSuccessUrl("/")
+                .and()
+                .logout()
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutSuccessUrl("/");
+        System.out.println("-------------------------llegaron al login");
     }
 
     @Autowired

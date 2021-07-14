@@ -34,7 +34,7 @@ public class UserController {
     public String signInRedirect(Authentication auth, HttpSession session){
         User user = userRepository.findByCorreo(auth.getName());
         session.setAttribute("user", user);
-
+        System.out.println("-------------llegaron hasta aqui");
         String rol ="";
         for (GrantedAuthority role : auth.getAuthorities()) {
             rol = role.getAuthority();
